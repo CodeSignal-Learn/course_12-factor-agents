@@ -3,8 +3,6 @@ import logging
 from agent import Agent
 from client_tool import ClientTool
 from tools.math import sum_numbers, multiply_numbers, subtract_numbers, divide_numbers, power, square_root
-from tools.executor import execute_python_code
-from tools.interaction import request_clarification
 
 # Configure logging so INFO logs are visible
 logging.basicConfig(level=logging.INFO, format="%(message)s")
@@ -18,9 +16,7 @@ tools = [
     ClientTool("subtract", "Subtract the second number from the first.", subtract_numbers),
     ClientTool("divide", "Divide the first number by the second.", divide_numbers),
     ClientTool("power", "Raise the base to the power of the exponent.", power),
-    ClientTool("sqrt", "Calculate the square root of a number.", square_root),
-    ClientTool("execute_python_code", "Execute Python code and return the result.", execute_python_code, require_approval=True),
-    ClientTool("request_clarification", "Ask the user for clarification or additional information.", request_clarification)
+    ClientTool("sqrt", "Calculate the square root of a number.", square_root)
 ]
 
 # Initialize the agent with the tools
@@ -37,7 +33,7 @@ agent = Agent(
 context = [
     {
         "role": "user",
-        "content": "Solve this equation: 2x² - 7x + 3 = using Python"
+        "content": "Solve this equation: 2x² - 7x + 3 = 0"
     }
 ]
 
