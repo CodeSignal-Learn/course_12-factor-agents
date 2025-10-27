@@ -8,7 +8,8 @@ logger = logging.getLogger(__name__)
 
 
 class AgentRunResult:
-    def __init__(self, final_output, history):
+    def __init__(self, status, final_output, history):
+        self.status = status
         self.final_output = final_output
         self.history = history
 
@@ -136,8 +137,16 @@ class Agent:
                     "content": response.output_text
                 })
                 
-                # Return the agent history and final output
-                return AgentRunResult(final_output=response.output_text, history=context)
+                # Return with completed status
+                return AgentRunResult(
+                    status="completed",
+                    final_output=response.output_text,
+                    history=context
+                )
 
-        # If the max turns is reached, raise an exception
-        raise Exception("Max turns reached")
+        # If the max turns is reached, return with max_turns_reached status
+        return AgentRunResult(
+            status="max_turns_reached",
+            final_output="Max turns reached",
+            history=context
+        )
